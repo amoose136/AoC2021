@@ -28,11 +28,11 @@ scores=np.zeros(100,dtype=int)
 completed=np.zeros(100,dtype=int)
 index=0
 remaining=len([i for i in completed if i == 0])
-while(remaining==100):
+while(remaining>0):
     for [i,field] in enumerate(gamefields):
         if completed[i]==0:
             for [j,row] in enumerate(field):
-                field[j]=[10000 if val==nums[index] else val for val in row]
+                field[j]=[val+10000 if val==nums[index] else val for val in row]
             gamefields[i]=field
     for [i,val] in enumerate(completed):
         if val!=1:
@@ -57,8 +57,10 @@ while(remaining==100):
                     break
     index+=1
     remaining=len([i for i in completed if i == 0])
-winningboard=np.array(gamefields[completed.tolist().index(1)])
-winningboard=winningboard.reshape(-1).tolist()
-winningboard=[i if i!=10000 else 0 for i in winningboard]
-score=np.sum(winningboard)*nums[index-1]
+loserid=completed_in.tolist().index(np.max(completed_in))
+losingboard=np.array(gamefields[loserid])
+print(losingboard)
+losingboard=losingboard.reshape(-1).tolist()
+losingboard=[i if i<10000 else 0 for i in losingboard]
+score=np.sum(losingboard)*nums[index-1]
 print(score)
